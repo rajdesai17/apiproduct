@@ -4,8 +4,12 @@
 
 @layer base {
   html, body {
-    @apply min-h-screen font-sans;
+    @apply min-h-screen font-sans overflow-x-hidden;
     background: transparent;
+  }
+  
+  #root {
+    @apply min-h-screen flex flex-col;
   }
 }
 
@@ -76,5 +80,21 @@
     border-color: #3b82f6; /* Change this color to match your design */
     outline: none;
     box-shadow: 0 0 0 1px #3b82f6; /* Optional: Add a shadow to make the focus more prominent */
+  }
+
+  .gradient-background {
+    @apply fixed inset-0 -z-10;
+  }
+  
+  .blur-navbar {
+    @apply fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 border-b border-gray-100;
+  }
+  
+  .form-container {
+    @apply flex items-center justify-center min-h-[calc(100vh-80px)] py-10 w-full;
+    min-height: calc(100vh - 80px); /* Ensure the container takes full height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

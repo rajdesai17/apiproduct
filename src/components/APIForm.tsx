@@ -450,45 +450,47 @@ const APIForm: React.FC = () => {
   };
 
   return (
-    <div className="w-[800px] mx-auto py-6">
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="flex">
-          <div className="gradient-side w-[160px]" />
-          <div className="flex-1 p-6">
-            <div className="max-w-2xl mx-auto">
-              {renderStepIndicator()}
-              <div className="mb-6 min-h-[400px] overflow-y-auto">{renderStep()}</div>
-              <div className="flex justify-between items-center">
-                {currentStep > 1 ? (
-                  <button
-                    onClick={() => setCurrentStep((prev) => (prev - 1) as Step)}
-                    className="back-button"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                    <span>Back</span>
-                  </button>
-                ) : (
-                  <div></div>
-                )}
+    <div className="form-container flex items-center justify-center min-h-screen">
+      <div className="max-w-[800px] w-full mx-auto">
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="flex">
+            <div className="gradient-side w-[160px]" />
+            <div className="flex-1 p-6">
+              <div className="max-w-2xl mx-auto">
+                {renderStepIndicator()}
+                <div className="mb-6 min-h-[400px] overflow-y-auto">{renderStep()}</div>
+                <div className="flex justify-between items-center">
+                  {currentStep > 1 ? (
+                    <button
+                      onClick={() => setCurrentStep((prev) => (prev - 1) as Step)}
+                      className="back-button"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                      <span>Back</span>
+                    </button>
+                  ) : (
+                    <div></div>
+                  )}
 
-                {currentStep < 5 ? (
-                  <button
-                    onClick={() => setCurrentStep((prev) => (prev + 1) as Step)}
-                    className="continue-button"
-                    disabled={currentStep === 1 && !formData.name}
-                  >
-                    <span>Continue</span>
-                    <ChevronRight className="h-4 w-4" />
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => console.log('API Created:', formData)}
-                    className="continue-button"
-                  >
-                    <span>Create API</span>
-                    <Settings2 className="h-4 w-4 ml-1" />
-                  </button>
-                )}
+                  {currentStep < 5 ? (
+                    <button
+                      onClick={() => setCurrentStep((prev) => (prev + 1) as Step)}
+                      className="continue-button"
+                      disabled={currentStep === 1 && !formData.name}
+                    >
+                      <span>Continue</span>
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => console.log('API Created:', formData)}
+                      className="continue-button"
+                    >
+                      <span>Create API</span>
+                      <Settings2 className="h-4 w-4 ml-1" />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
