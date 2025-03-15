@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply min-h-screen font-sans;
+    background: transparent;
+  }
+}
+
+@layer components {
+  .form-input {
+    @apply w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition-all duration-200 hover:border-gray-300;
+  }
+  
+  .form-select {
+    @apply w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition-all duration-200 hover:border-gray-300;
+  }
+  
+  .form-textarea {
+    @apply w-full px-3 py-2 border border-gray-200 rounded-lg bg-white focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition-all duration-200 hover:border-gray-300 min-h-[80px];
+  }
+  
+  .step-indicator {
+    @apply w-7 h-7 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-300 shadow-sm hover:shadow-md;
+  }
+  
+  .step-line {
+    @apply flex-1 h-0.5 transition-all duration-300;
+  }
+
+  .gradient-side {
+    background: linear-gradient(180deg, 
+      #2563eb 0%,
+      #3b82f6 30%,
+      #60a5fa 60%,
+      #93c5fd 80%,
+      #bfdbfe 90%,
+      #ffffff 100%
+    ) !important;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    min-height: 500px; /* Ensure minimum height */
+  }
+
+  .content-side {
+    @apply bg-white py-6 px-8;
+  }
+
+  .continue-button {
+    @apply bg-gradient-to-r from-blue-600 to-blue-500 text-white px-5 py-2 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-300 flex items-center space-x-2 text-sm font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5;
+  }
+
+  .back-button {
+    @apply flex items-center space-x-1 text-gray-600 hover:text-gray-900 transition-colors text-sm px-4 py-2 rounded-lg hover:bg-gray-50;
+  }
+
+  .method-button {
+    @apply p-3 rounded-lg flex items-center space-x-2 transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5;
+  }
+
+  .auth-toggle {
+    @apply p-4 bg-gray-50 rounded-lg border border-gray-100 hover:border-gray-200 transition-all duration-300 shadow-sm hover:shadow-md;
+  }
+
+  .role-chip {
+    @apply px-4 py-1.5 rounded-full text-sm transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5;
+  }
+
+  .review-card {
+    @apply bg-gray-50 rounded-lg p-5 shadow-inner border border-gray-100;
+  }
+
+  /* Add the following styles to ensure border visibility on focus */
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: #3b82f6; /* Change this color to match your design */
+    outline: none;
+    box-shadow: 0 0 0 1px #3b82f6; /* Optional: Add a shadow to make the focus more prominent */
+  }
+}
