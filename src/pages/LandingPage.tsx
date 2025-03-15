@@ -1,12 +1,10 @@
 import React from 'react';
 import { ArrowRight, ArrowDownCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import BackgroundGradient from '../components/BackgroundGradient';
 
 const LandingPage: React.FC = () => {
-  const navigate = useNavigate();
-
   return (
     <>
       <BackgroundGradient />
@@ -23,13 +21,13 @@ const LandingPage: React.FC = () => {
                 Create, manage, and deploy APIs with ease. Build powerful integrations in minutes without complex setup.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => navigate('/create')}
+                <Link
+                  to="/create"
                   className="inline-flex items-center justify-center px-6 py-3 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   Get Started
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </button>
+                </Link>
                 <button
                   onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
                   className="inline-flex items-center justify-center px-6 py-3 text-lg font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-all duration-300"
@@ -44,10 +42,6 @@ const LandingPage: React.FC = () => {
               {/* Add your image or illustration here */}
             </div>
           </div>
-          {/* Remove the following sections */}
-          {/* Features Section */}
-          {/* Testimonials */}
-          {/* CTA Section */}
         </div>
       </div>
     </>
