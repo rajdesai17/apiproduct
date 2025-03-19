@@ -23,36 +23,28 @@ interface APIFormData {
   collectionName: string;
 }
 
-const VERSIONS = ['v1', 'v2', 'v3'];
-const PRODUCTS = ['Product A', 'Product B', 'Product C'];
-const COLLECTIONS = ['Users', 'Orders', 'Products', 'Transactions'];
-const AUTH_METHODS: AuthMethod[] = ['OAuth', 'API Key', 'JWT'];
-const ROLES = ['Admin', 'User', 'Guest', 'Public'];
+const DEFAULTS = {
+  VERSIONS: ['v1', 'v2', 'v3'],
+  PRODUCTS: ['Product A', 'Product B', 'Product C'],
+  COLLECTIONS: ['Users', 'Orders', 'Products'],
+  AUTH_METHODS: ['OAuth', 'API Key', 'JWT'] as AuthMethod[],
+  ROLES: ['Admin', 'User', 'Guest', 'Public']
+};
 
 const APIForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [formData, setFormData] = useState<APIFormData>({
-    name: '',
-    apiId: '',
-    version: '',
-    productName: '',
-    masterCollection: '',
-    recordLimit: 100,
-    description: '',
-    method: null,
-    endpoint: '/api/v1/',
-    defaultCondition: '',
-    requiresAuth: false,
-    authMethod: null,
-    roles: [],
-    databaseName: '',
-    collectionName: '',
+    name: '', apiId: '', version: '', productName: '',
+    masterCollection: '', recordLimit: 100, description: '',
+    method: null, endpoint: '/api/v1/', defaultCondition: '',
+    requiresAuth: false, authMethod: null, roles: [],
+    databaseName: '', collectionName: ''
   });
 
-  const updateFormData = (field: keyof APIFormData, value: any) => {
+  const updateFormData = <K extends keyof APIFormData>(field: K, value: APIFormData[K]) => {
     setFormData(prev => {
       const newData = { ...prev, [field]: value };
-      if (field === 'name') {
+      if (field === 'name' && typeof value === 'string') {
         newData.apiId = value.toLowerCase().replace(/\s+/g, '-');
         newData.endpoint = `/api/v1/${newData.apiId}`;
       }
@@ -60,17 +52,17 @@ const APIForm: React.FC = () => {
     });
   };
 
-  const methods: { type: HttpMethod; color: string; icon: React.ReactNode }[] = [
-    { type: 'GET', color: 'bg-emerald-500', icon: <Server className="h-4 w-4" /> },
-    { type: 'POST', color: 'bg-blue-500', icon: <Server className="h-4 w-4" /> },
-    { type: 'PUT', color: 'bg-amber-500', icon: <Server className="h-4 w-4" /> },
-    { type: 'DELETE', color: 'bg-red-500', icon: <Server className="h-4 w-4" /> },
-  ];
+  const methods = [
+    { type: 'GET', color: 'bg-emerald-500' },
+    { type: 'POST', color: 'bg-blue-500' },
+    { type: 'PUT', color: 'bg-amber-500' },
+    { type: 'DELETE', color: 'bg-red-500' }
+  ] as const;
 
   const renderTooltip = (text: string) => (
     <div className="group relative inline-block ml-1">
       <Info className="h-3 w-3 text-gray-400 cursor-help" />
-      <div className="hidden group-hover:block absolute z-10 w-48 p-2 mt-1 text-xs text-white bg-gray-800 rounded-lg -left-1/2">
+      <div className="hidden group-hover:block absolute z-10 w-48 p-2 mt-1 text-xs text-white bg-gray-800 rounded-lg">
         {text}
       </div>
     </div>
@@ -158,7 +150,7 @@ const APIForm: React.FC = () => {
                   onChange={(e) => updateFormData('version', e.target.value)}
                 >
                   <option value="">Select Version</option>
-                  {VERSIONS.map(version => (
+                  {DEFAULTS.VERSIONS.map(version => (
                     <option key={version} value={version}>{version}</option>
                   ))}
                 </select>
@@ -171,7 +163,7 @@ const APIForm: React.FC = () => {
                   onChange={(e) => updateFormData('productName', e.target.value)}
                 >
                   <option value="">Select Product</option>
-                  {PRODUCTS.map(product => (
+                  {DEFAULTS.PRODUCTS.map(product => (
                     <option key={product} value={product}>{product}</option>
                   ))}
                 </select>
@@ -184,7 +176,7 @@ const APIForm: React.FC = () => {
                   onChange={(e) => updateFormData('masterCollection', e.target.value)}
                 >
                   <option value="">Select Collection</option>
-                  {COLLECTIONS.map(collection => (
+                  {DEFAULTS.COLLECTIONS.map(collection => (
                     <option key={collection} value={collection}>{collection}</option>
                   ))}
                 </select>
@@ -224,7 +216,7 @@ const APIForm: React.FC = () => {
                   Select API Method {renderTooltip("Choose the HTTP method for your API")}
                 </label>
                 <div className="grid grid-cols-2 gap-3">
-                  {methods.map(({ type, color, icon }) => (
+                  {methods.map(({ type, color }) => (
                     <button
                       key={type}
                       className={`method-button ${
@@ -234,7 +226,7 @@ const APIForm: React.FC = () => {
                       }`}
                       onClick={() => updateFormData('method', type)}
                     >
-                      {icon}
+                      <Server className="h-4 w-4" />
                       <span className="text-sm font-medium">{type}</span>
                     </button>
                   ))}
@@ -299,7 +291,7 @@ const APIForm: React.FC = () => {
                       Authentication Method {renderTooltip("Choose how users will authenticate")}
                     </label>
                     <div className="grid grid-cols-3 gap-3">
-                      {AUTH_METHODS.map(method => (
+                      {DEFAULTS.AUTH_METHODS.map(method => (
                         <button
                           key={method}
                           onClick={() => updateFormData('authMethod', method)}
@@ -321,7 +313,7 @@ const APIForm: React.FC = () => {
                       Authorization Roles {renderTooltip("Select access roles")}
                     </label>
                     <div className="flex flex-wrap gap-2">
-                      {ROLES.map(role => (
+                      {DEFAULTS.ROLES.map(role => (
                         <button
                           key={role}
                           onClick={() => {
