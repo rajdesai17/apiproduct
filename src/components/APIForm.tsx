@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronRight, ChevronLeft, Info, Lock, Server, Settings2, Shield, Database } from 'lucide-react';
 
 type Step = 1 | 2 | 3 | 4 | 5;
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 type AuthMethod = 'OAuth' | 'API Key' | 'JWT';
+
+interface Product {
+  _id: string;
+  name: string;
+  description: string;
+}
 
 interface APIFormData {
   name: string;
@@ -25,7 +31,6 @@ interface APIFormData {
 
 const DEFAULTS = {
   VERSIONS: ['v1', 'v2', 'v3'],
-  PRODUCTS: ['Product A', 'Product B', 'Product C'],
   COLLECTIONS: ['Users', 'Orders', 'Products'],
   AUTH_METHODS: ['OAuth', 'API Key', 'JWT'] as AuthMethod[],
   ROLES: ['Admin', 'User', 'Guest', 'Public']
@@ -33,6 +38,7 @@ const DEFAULTS = {
 
 const APIForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<Step>(1);
+  const [products, setProducts] = useState<Product[]>([]);
   const [formData, setFormData] = useState<APIFormData>({
     name: '', apiId: '', version: '', productName: '',
     masterCollection: '', recordLimit: 100, description: '',
@@ -40,6 +46,25 @@ const APIForm: React.FC = () => {
     requiresAuth: false, authMethod: null, roles: [],
     databaseName: '', collectionName: ''
   });
+
+  // Fetch products on component mount
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/products');
+      if (!response.ok) {
+        throw new Error('Failed to fetch products');
+      }
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setProducts([]); // Set empty array on error
+    }
+  };
 
   const updateFormData = <K extends keyof APIFormData>(field: K, value: APIFormData[K]) => {
     setFormData(prev => {
@@ -162,9 +187,11 @@ const APIForm: React.FC = () => {
                   value={formData.productName}
                   onChange={(e) => updateFormData('productName', e.target.value)}
                 >
-                  <option value="">Select Product</option>
-                  {DEFAULTS.PRODUCTS.map(product => (
-                    <option key={product} value={product}>{product}</option>
+                  <option value="">{products.length === 0 ? 'No products available' : 'Select Product'}</option>
+                  {products.map((product) => (
+                    <option key={product._id} value={product.name}>
+                      {product.name}
+                    </option>
                   ))}
                 </select>
               </div>
