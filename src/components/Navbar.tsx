@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Package } from 'lucide-react';
+import { Zap, Package, Database, Layout } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   return (
@@ -35,6 +35,20 @@ const Navbar: React.FC = () => {
             >
               <Package className="h-4 w-4" />
               Create Product
+            </Link>
+            <Link
+              to="/product-setup"
+              className="text-sm text-gray-700 hover:text-gray-900 px-3 py-2 flex items-center gap-1 transition-colors"
+            >
+              <Database className="h-4 w-4" />
+              Product Setup
+            </Link>
+            <Link
+              to="/enterprise-creation"
+              className="text-sm text-gray-700 hover:text-gray-900 px-3 py-2 flex items-center gap-1 transition-colors"
+            >
+              <Layout className="h-4 w-4" />
+              Enterprise Creation
             </Link>
             <Link
               to="/create"

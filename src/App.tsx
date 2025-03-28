@@ -5,6 +5,8 @@ import BackgroundGradient from './components/BackgroundGradient';
 import Navbar from './components/Navbar';
 import APIForm from './components/APIForm';
 import ProductForm from './components/ProductForm';
+import ProductSetupForm from './components/ProductSetupForm';
+import EnterpriseCreationForm from './components/EnterpriseCreationForm';
 
 const CreatePage: React.FC = () => {
   return (
@@ -30,6 +32,30 @@ const CreateProductPage: React.FC = () => {
   );
 };
 
+const ProductSetupPage: React.FC = () => {
+  return (
+    <>
+      <BackgroundGradient />
+      <Navbar />
+      <div className="relative z-10">
+        <ProductSetupForm />
+      </div>
+    </>
+  );
+};
+
+const EnterpriseCreationPage: React.FC = () => {
+  return (
+    <>
+      <BackgroundGradient />
+      <Navbar />
+      <div className="relative z-10">
+        <EnterpriseCreationForm />
+      </div>
+    </>
+  );
+};
+
 const App: React.FC = () => {
   return (
     <Router>
@@ -37,7 +63,8 @@ const App: React.FC = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/create" element={<CreatePage />} />
         <Route path="/create-product" element={<CreateProductPage />} />
-        {/* Add more routes as needed */}
+        <Route path="/product-setup" element={<ProductSetupPage />} />
+        <Route path="/enterprise-creation" element={<EnterpriseCreationPage />} />
       </Routes>
     </Router>
   );
